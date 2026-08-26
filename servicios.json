@@ -1,283 +1,565 @@
-{
-      "servicios_destacados": [
-            {
-                  "id": "dest-1",
-                  "nombre": "Carta Natal",
-                  "precio_ars": 120000,
-                  "precio_eur": 150,
-                  "precio_usd": 160,
-                  "icon": "sun",
-                  "duracion": "",
-                  "descripcion": "Una lectura personalizada del mapa astral del momento del nacimiento que permite explorar aspectos de la personalidad, recursos, desafíos, vínculos y procesos personales.",
-                  "bullets": [
-                        "Informe PDF personalizado",
-                        "Sesión individual",
-                        "Enfoque psicológico"
-                  ]
-            },
-            {
-                  "id": "dest-2",
-                  "nombre": "Revolución Solar",
-                  "precio_ars": 110000,
-                  "precio_eur": 130,
-                  "precio_usd": 140,
-                  "icon": "moon",
-                  "duracion": "",
-                  "descripcion": "Una lectura enfocada en el ciclo que comienza en cada cumpleaños, permitiendo observar las principales energías, temas y aprendizajes que pueden acompañar el nuevo año personal.",
-                  "bullets": [
-                        "Análisis anual",
-                        "Informe PDF",
-                        "Sesión explicativa"
-                  ]
-            },
-            {
-                  "id": "dest-3",
-                  "nombre": "Compatibilidad y Sinastría",
-                  "precio_ars": 150000,
-                  "precio_eur": 180,
-                  "precio_usd": 190,
-                  "icon": "heart-handshake",
-                  "duracion": "",
-                  "descripcion": "Un análisis comparativo entre dos cartas natales para comprender dinámicas vinculares, puntos de encuentro, desafíos y formas de relacionarse.",
-                  "bullets": [
-                        "Comparación de cartas y análisis vincular",
-                        "Informe completo",
-                        "Sesión explicativa"
-                  ]
-            },
-            {
-                  "id": "dest-4",
-                  "nombre": "Tarot",
-                  "precio_ars": 15000,
-                  "precio_eur": 10,
-                  "precio_usd": 12,
-                  "icon": "sparkles",
-                  "duracion": "",
-                  "descripcion": "Un espacio de consulta y reflexión que utiliza el simbolismo de las cartas como herramienta para aportar claridad, nuevas perspectivas y orientación sobre situaciones, decisiones o procesos personales.",
-                  "bullets": [
-                        "Preguntas puntuales",
-                        "Audio o videollamada",
-                        "Claridad y orientación"
-                  ]
-            }
-      ],
-      "paquetes": [
-            {
-                  "id": "pack-1",
-                  "nombre": "Pack Esencia",
-                  "precio_ars": 179000,
-                  "precio_eur": 189,
-                  "precio_usd": 199,
-                  "icon": "sun",
-                  "bullets": [
-                        "Carta Natal",
-                        "Numerología",
-                        "Sesión Integrativa"
-                  ],
-                  "button_text": "Quiero este paquete"
-            },
-            {
-                  "id": "pack-2",
-                  "nombre": "Pack Evolución",
-                  "precio_ars": 219000,
-                  "precio_eur": 269,
-                  "precio_usd": 279,
-                  "icon": "moon",
-                  "bullets": [
-                        "Carta Natal",
-                        "Revolución Solar",
-                        "Sesión de orientación"
-                  ],
-                  "button_text": "Reservar"
-            },
-            {
-                  "id": "pack-3",
-                  "nombre": "Pack Vinculos",
-                  "precio_ars": 185000,
-                  "precio_eur": 195,
-                  "precio_usd": 205,
-                  "icon": "heart-handshake",
-                  "bullets": [
-                        "Sinastría",
-                        "Tarot Evolutivo",
-                        "Sesión Integrativa"
-                  ],
-                  "button_text": "Consultar"
-            },
-            {
-                  "id": "pack-4",
-                  "nombre": "Programa Bloom (acompañamiento)",
-                  "precio_ars": 279000,
-                  "precio_eur": 299,
-                  "precio_usd": 319,
-                  "icon": "flower",
-                  "bullets": [
-                        "3 sesiones Psicología",
-                        "1 herramienta integrativa a elección que se entrega en PDF (Revo solar/ Revo lunar/Carta numerológica)"
-                  ],
-                  "button_text": "Reservar"
-            }
-      ],
-      "todos_los_servicios": [
-            {
-                  "categoria": "Psicología",
-                  "items": [
-                        {
-                              "id": "all-1",
-                              "nombre": "Sesión individual",
-                              "precio_ars": 60000,
-                              "precio_eur": 60,
-                              "precio_usd": 65
-                        }
-                  ]
-            },
-            {
-                  "categoria": "Biodescodificación",
-                  "items": [
-                        {
-                              "id": "all-2",
-                              "nombre": "Sesión",
-                              "precio_ars": 50000,
-                              "precio_eur": 50,
-                              "precio_usd": 55
-                        }
-                  ]
-            },
-            {
-                  "categoria": "Psicoastrología",
-                  "items": [
-                        {
-                              "id": "all-5",
-                              "nombre": "Tránsitos",
-                              "precio_ars": 70000,
-                              "precio_eur": 70,
-                              "precio_usd": 75
-                        },
-                        {
-                              "id": "all-3",
-                              "nombre": "Carta Natal",
-                              "precio_ars": 120000,
-                              "precio_eur": 150,
-                              "precio_usd": 160
-                        },
-                        {
-                              "id": "all-4",
-                              "nombre": "Revolución Solar",
-                              "precio_ars": 110000,
-                              "precio_eur": 130,
-                              "precio_usd": 140
-                        },
-                        {
-                              "id": "all-6",
-                              "nombre": "Sinastría",
-                              "precio_ars": 150000,
-                              "precio_eur": 180,
-                              "precio_usd": 195
-                        },
-                        {
-                              "id": "all-8",
-                              "nombre": "Astrología Horaria",
-                              "precio_ars": 60000,
-                              "precio_eur": 55,
-                              "precio_usd": 60
-                        },
-                        {
-                              "id": "all-4-lunar",
-                              "nombre": "Revolución Lunar",
-                              "precio_ars": 80000,
-                              "precio_eur": 80,
-                              "precio_usd": 85
-                        },
-                        {
-                              "id": "all-7",
-                              "nombre": "Carta Infantil",
-                              "precio_ars": 120000,
-                              "precio_eur": 150,
-                              "precio_usd": 160
-                        }
-                  ]
-            },
-            {
-                  "categoria": "Tarot",
-                  "items": [
-                        {
-                              "id": "all-9",
-                              "nombre": "1 pregunta",
-                              "precio_ars": 15000,
-                              "precio_eur": 10,
-                              "precio_usd": 12
-                        },
-                        {
-                              "id": "all-10",
-                              "nombre": "3 preguntas",
-                              "precio_ars": 30000,
-                              "precio_eur": 25,
-                              "precio_usd": 28
-                        },
-                        {
-                              "id": "all-12",
-                              "nombre": "Videollamada 60 min",
-                              "precio_ars": 60000,
-                              "precio_eur": 60,
-                              "precio_usd": 65
-                        },
-                        {
-                              "id": "all-11",
-                              "nombre": "Videollamada 30 min",
-                              "precio_ars": 35000,
-                              "precio_eur": 35,
-                              "precio_usd": 40
-                        }
-                  ]
-            },
-            {
-                  "categoria": "Registros Akáshicos",
-                  "items": [
-                        {
-                              "id": "all-13",
-                              "nombre": "3 preguntas",
-                              "precio_ars": 30000,
-                              "precio_eur": 25,
-                              "precio_usd": 28
-                        },
-                        {
-                              "id": "all-14",
-                              "nombre": "5 preguntas",
-                              "precio_ars": 50000,
-                              "precio_eur": 45,
-                              "precio_usd": 50
-                        }
-                  ]
-            },
-            {
-                  "categoria": "Numerología",
-                  "items": [
-                        {
-                              "id": "all-15",
-                              "nombre": "Carta Numerológica",
-                              "precio_ars": 60000,
-                              "precio_eur": 60,
-                              "precio_usd": 65
-                        }
-                  ]
-            },
-            {
-                  "categoria": "Limpieza Energética",
-                  "items": [
-                        {
-                              "id": "all-16",
-                              "nombre": "Sesión",
-                              "precio_ars": 45000,
-                              "precio_eur": 45,
-                              "precio_usd": 50
-                        }
-                  ]
-            }
-      ],
-      "whatsapp_phone": "34697266101",
-      "ebook_config": {
-            "etiqueta": "Próximamente",
-            "titulo": "Los ciclos de la vida",
-            "descripcion": "Psicoastrología para comprender tus etapas de transformación.\n\nCada etapa de la vida tiene un propósito. Comprender los ciclos que atraviesas puede ayudarte a dar sentido a tus experiencias, reconocer tus aprendizajes y transitar los cambios con mayor consciencia.\n\nEn este ebook descubrirás cómo la psicoastrología integra la astrología y la psicología para comprender los momentos de crisis, crecimiento y transformación personal desde una mirada profunda y práctica.\n\nPróximamente disponible. Regístrate para acceder a la preventa y recibir todas las novedades."
-      }
+{
+
+      "servicios_destacados": [
+
+            {
+
+                  "id": "dest-1",
+
+                  "nombre": "Carta Natal",
+
+                  "precio_ars": 120000,
+
+                  "precio_eur": 150,
+
+                  "precio_usd": 160,
+
+                  "icon": "sun",
+
+                  "duracion": "",
+
+                  "descripcion": "Una lectura personalizada del mapa astral del momento del nacimiento que permite explorar aspectos de la personalidad, recursos, desafíos, vínculos y procesos personales.",
+
+                  "bullets": [
+
+                        "Informe PDF personalizado",
+
+                        "Sesión individual",
+
+                        "Enfoque psicológico"
+
+                  ]
+
+            },
+
+            {
+
+                  "id": "dest-2",
+
+                  "nombre": "Revolución Solar",
+
+                  "precio_ars": 110000,
+
+                  "precio_eur": 130,
+
+                  "precio_usd": 140,
+
+                  "icon": "moon",
+
+                  "duracion": "",
+
+                  "descripcion": "Una lectura enfocada en el ciclo que comienza en cada cumpleaños, permitiendo observar las principales energías, temas y aprendizajes que pueden acompañar el nuevo año personal.",
+
+                  "bullets": [
+
+                        "Análisis anual",
+
+                        "Informe PDF",
+
+                        "Sesión explicativa"
+
+                  ]
+
+            },
+
+            {
+
+                  "id": "dest-3",
+
+                  "nombre": "Compatibilidad y Sinastría",
+
+                  "precio_ars": 150000,
+
+                  "precio_eur": 180,
+
+                  "precio_usd": 190,
+
+                  "icon": "heart-handshake",
+
+                  "duracion": "",
+
+                  "descripcion": "Un análisis comparativo entre dos cartas natales para comprender dinámicas vinculares, puntos de encuentro, desafíos y formas de relacionarse.",
+
+                  "bullets": [
+
+                        "Comparación de cartas y análisis vincular",
+
+                        "Informe completo",
+
+                        "Sesión explicativa"
+
+                  ]
+
+            },
+
+            {
+
+                  "id": "dest-4",
+
+                  "nombre": "Tarot",
+
+                  "precio_ars": 15000,
+
+                  "precio_eur": 10,
+
+                  "precio_usd": 12,
+
+                  "icon": "sparkles",
+
+                  "duracion": "",
+
+                  "descripcion": "Un espacio de consulta y reflexión que utiliza el simbolismo de las cartas como herramienta para aportar claridad, nuevas perspectivas y orientación sobre situaciones, decisiones o procesos personales.",
+
+                  "bullets": [
+
+                        "Preguntas puntuales",
+
+                        "Audio o videollamada",
+
+                        "Claridad y orientación"
+
+                  ]
+
+            }
+
+      ],
+
+      "paquetes": [
+
+            {
+
+                  "id": "pack-1",
+
+                  "nombre": "Pack Esencia",
+
+                  "precio_ars": 179000,
+
+                  "precio_eur": 189,
+
+                  "precio_usd": 199,
+
+                  "icon": "sun",
+
+                  "bullets": [
+
+                        "Carta Natal",
+
+                        "Numerología",
+
+                        "Sesión Integrativa"
+
+                  ],
+
+                  "button_text": "Quiero este paquete"
+
+            },
+
+            {
+
+                  "id": "pack-2",
+
+                  "nombre": "Pack Evolución",
+
+                  "precio_ars": 219000,
+
+                  "precio_eur": 269,
+
+                  "precio_usd": 279,
+
+                  "icon": "moon",
+
+                  "bullets": [
+
+                        "Carta Natal",
+
+                        "Revolución Solar",
+
+                        "Sesión de orientación"
+
+                  ],
+
+                  "button_text": "Reservar"
+
+            },
+
+            {
+
+                  "id": "pack-3",
+
+                  "nombre": "Pack Vinculos",
+
+                  "precio_ars": 185000,
+
+                  "precio_eur": 195,
+
+                  "precio_usd": 205,
+
+                  "icon": "heart-handshake",
+
+                  "bullets": [
+
+                        "Sinastría",
+
+                        "Tarot Evolutivo",
+
+                        "Sesión Integrativa"
+
+                  ],
+
+                  "button_text": "Consultar"
+
+            },
+
+            {
+
+                  "id": "pack-4",
+
+                  "nombre": "Programa Bloom (acompañamiento)",
+
+                  "precio_ars": 279000,
+
+                  "precio_eur": 299,
+
+                  "precio_usd": 319,
+
+                  "icon": "flower",
+
+                  "bullets": [
+
+                        "3 sesiones Psicología",
+
+                        "1 herramienta integrativa a elección que se entrega en PDF (Revo solar/ Revo lunar/Carta numerológica)"
+
+                  ],
+
+                  "button_text": "Reservar"
+
+            }
+
+      ],
+
+      "todos_los_servicios": [
+
+            {
+
+                  "categoria": "Psicología",
+
+                  "items": [
+
+                        {
+
+                              "id": "all-1",
+
+                              "nombre": "Sesión individual",
+
+                              "precio_ars": 60000,
+
+                              "precio_eur": 60,
+
+                              "precio_usd": 65
+
+                        }
+
+                  ]
+
+            },
+
+            {
+
+                  "categoria": "Biodescodificación",
+
+                  "items": [
+
+                        {
+
+                              "id": "all-2",
+
+                              "nombre": "Sesión",
+
+                              "precio_ars": 50000,
+
+                              "precio_eur": 50,
+
+                              "precio_usd": 55
+
+                        }
+
+                  ]
+
+            },
+
+            {
+
+                  "categoria": "Psicoastrología",
+
+                  "items": [
+
+                        {
+
+                              "id": "all-5",
+
+                              "nombre": "Tránsitos",
+
+                              "precio_ars": 70000,
+
+                              "precio_eur": 70,
+
+                              "precio_usd": 75
+
+                        },
+
+                        {
+
+                              "id": "all-3",
+
+                              "nombre": "Carta Natal",
+
+                              "precio_ars": 120000,
+
+                              "precio_eur": 150,
+
+                              "precio_usd": 160
+
+                        },
+
+                        {
+
+                              "id": "all-4",
+
+                              "nombre": "Revolución Solar",
+
+                              "precio_ars": 110000,
+
+                              "precio_eur": 130,
+
+                              "precio_usd": 140
+
+                        },
+
+                        {
+
+                              "id": "all-6",
+
+                              "nombre": "Sinastría",
+
+                              "precio_ars": 150000,
+
+                              "precio_eur": 180,
+
+                              "precio_usd": 195
+
+                        },
+
+                        {
+
+                              "id": "all-8",
+
+                              "nombre": "Astrología Horaria",
+
+                              "precio_ars": 60000,
+
+                              "precio_eur": 55,
+
+                              "precio_usd": 60
+
+                        },
+
+                        {
+
+                              "id": "all-4-lunar",
+
+                              "nombre": "Revolución Lunar",
+
+                              "precio_ars": 80000,
+
+                              "precio_eur": 80,
+
+                              "precio_usd": 85
+
+                        },
+
+                        {
+
+                              "id": "all-7",
+
+                              "nombre": "Carta Infantil",
+
+                              "precio_ars": 120000,
+
+                              "precio_eur": 150,
+
+                              "precio_usd": 160
+
+                        }
+
+                  ]
+
+            },
+
+            {
+
+                  "categoria": "Tarot",
+
+                  "items": [
+
+                        {
+
+                              "id": "all-9",
+
+                              "nombre": "1 pregunta",
+
+                              "precio_ars": 15000,
+
+                              "precio_eur": 10,
+
+                              "precio_usd": 12
+
+                        },
+
+                        {
+
+                              "id": "all-10",
+
+                              "nombre": "3 preguntas",
+
+                              "precio_ars": 30000,
+
+                              "precio_eur": 25,
+
+                              "precio_usd": 28
+
+                        },
+
+                        {
+
+                              "id": "all-12",
+
+                              "nombre": "Videollamada 60 min",
+
+                              "precio_ars": 60000,
+
+                              "precio_eur": 60,
+
+                              "precio_usd": 65
+
+                        },
+
+                        {
+
+                              "id": "all-11",
+
+                              "nombre": "Videollamada 30 min",
+
+                              "precio_ars": 35000,
+
+                              "precio_eur": 35,
+
+                              "precio_usd": 40
+
+                        }
+
+                  ]
+
+            },
+
+            {
+
+                  "categoria": "Registros Akáshicos",
+
+                  "items": [
+
+                        {
+
+                              "id": "all-13",
+
+                              "nombre": "3 preguntas",
+
+                              "precio_ars": 30000,
+
+                              "precio_eur": 25,
+
+                              "precio_usd": 28
+
+                        },
+
+                        {
+
+                              "id": "all-14",
+
+                              "nombre": "5 preguntas",
+
+                              "precio_ars": 50000,
+
+                              "precio_eur": 45,
+
+                              "precio_usd": 50
+
+                        }
+
+                  ]
+
+            },
+
+            {
+
+                  "categoria": "Numerología",
+
+                  "items": [
+
+                        {
+
+                              "id": "all-15",
+
+                              "nombre": "Carta Numerológica",
+
+                              "precio_ars": 60000,
+
+                              "precio_eur": 60,
+
+                              "precio_usd": 65
+
+                        }
+
+                  ]
+
+            },
+
+            {
+
+                  "categoria": "Limpieza Energética",
+
+                  "items": [
+
+                        {
+
+                              "id": "all-16",
+
+                              "nombre": "Sesión",
+
+                              "precio_ars": 45000,
+
+                              "precio_eur": 45,
+
+                              "precio_usd": 50
+
+                        }
+
+                  ]
+
+            }
+
+      ],
+
+      "whatsapp_phone": "34697266101",
+
+      "ebook_config": {
+
+            "etiqueta": "Próximamente",
+
+            "titulo": "Los ciclos de la vida",
+
+            "descripcion": "Psicoastrología para comprender tus etapas de transformación.\n\nCada etapa de la vida tiene un propósito. Comprender los ciclos que atraviesas puede ayudarte a dar sentido a tus experiencias, reconocer tus aprendizajes y transitar los cambios con mayor consciencia.\n\nEn este ebook descubrirás cómo la psicoastrología integra la astrología y la psicología para comprender los momentos de crisis, crecimiento y transformación personal desde una mirada profunda y práctica.\n\nPróximamente disponible. Regístrate para acceder a la preventa y recibir todas las novedades."
+
+      }
+
 }
