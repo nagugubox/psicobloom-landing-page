@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración | Lic. Laura Arzamendia</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cream: '#F7EFE6',
+              creamDark: '#E8DDD3',
+              sage: '#8EAA92',
+              rose: '#CFA6A0',
+              terracota: '#B8745B',
+              taupe: '#6E625A',
+              lila: '#af9cc3',
+              lilaDark: '#8f7ea6',
+              dark: '#2F2F2F',
+            }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-50 text-brand-dark font-sans leading-relaxed min-h-screen flex flex-col">
+
+  <!-- PASSWORD GATE OVERLAY -->
+  <div id="password-gate" class="fixed inset-0 z-50 bg-brand-cream flex items-center justify-center p-4">
+    <div class="bg-white border border-brand-rose/30 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center space-y-6">
+      <img src="assets/img/flor_loto.jpg" alt="Logo Laura Arzamendia" class="h-16 w-16 mx-auto rounded-full object-cover border border-brand-rose/30 shadow-sm">
+      <div class="space-y-2">
+        <h1 class="font-serif text-2xl font-bold text-brand-dark">Acceso Restringido</h1>
+        <p class="text-xs text-brand-taupe">Introduce el usuario y contraseña de administrador para gestionar las tarifas y servicios.</p>
+      </div>
+      
+      <form onsubmit="verifyPassword(event)" class="space-y-3">
+        <input type="text" id="gate-username" placeholder="Usuario administrador" class="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-lila text-center text-sm font-semibold" required>
+        <input type="password" id="gate-password" placeholder="Contraseña" class="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-lila text-center text-sm" required>
+        <button type="submit" class="w-full bg-brand-lila hover:bg-brand-lilaDark text-white py-3 rounded-full font-semibold transition-colors shadow-md">
+          Ingresar al panel
+        </button>
+      </form>
+      <div id="gate-error" class="text-red-500 text-xs font-semibold hidden">Usuario o contraseña incorrectos.</div>
+      
+      <div class="pt-4 border-t border-gray-100">
+        <a href="/" class="text-xs text-brand-sage hover:underline flex items-center justify-center space-x-1">
+          <i data-lucide="arrow-left" class="h-3.5 w-3.5"></i>
+          <span>Volver al sitio público</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN WORKSPACE CONTAINER -->
+  <div id="admin-panel" class="hidden flex-1 flex flex-col">
+    
+    <!-- Top Nav -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <img src="assets/img/flor_loto.jpg" alt="Logo" class="h-8 w-8 rounded-full object-cover border border-brand-rose/20">
+          <div>
+            <h1 class="font-serif text-lg font-bold text-brand-dark leading-none">Panel de Control</h1>
+            <span class="text-[10px] text-brand-taupe font-medium">Lic. Laura Arzamendia</span>
+          </div>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+          <a href="/" class="text-xs text-brand-taupe hover:text-brand-dark flex items-center space-x-1 px-3 py-1.5 border border-gray-200 rounded-full bg-white hover:bg-gray-50 transition-colors">
+            <i data-lucide="eye" class="h-3.5 w-3.5"></i>
+            <span>Ver Landing Page</span>
+          </a>
+          <button onclick="logout()" class="text-xs text-red-500 hover:text-red-700 font-semibold flex items-center space-x-1">
+            <i data-lucide="log-out" class="h-3.5 w-3.5"></i>
+            <span>Cerrar sesión</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Sidebar Navigation Tabs -->
+        <div class="lg:col-span-3 space-y-2">
+          <div class="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm space-y-1">
+            <div class="text-xs uppercase font-bold text-brand-taupe px-3 py-2 border-b border-gray-100 mb-2">Secciones</div>
+            
+            <button onclick="switchTab('destacados')" id="tab-destacados" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-colors flex items-center space-x-3 bg-brand-sage text-white shadow-sm">
+              <i data-lucide="sun" class="h-4.5 w-4.5"></i>
+              <span>Servicios Destacados</span>
+            </button>
+            
+            <button onclick="switchTab('paquetes')" id="tab-paquetes" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-brand-taupe hover:bg-gray-50 transition-colors flex items-center space-x-3">
+              <i data-lucide="gift" class="h-4.5 w-4.5"></i>
+              <span>Paquetes / Combos</span>
+            </button>
+            
+            <button onclick="switchTab('todos')" id="tab-todos" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-brand-taupe hover:bg-gray-50 transition-colors flex items-center space-x-3">
+              <i data-lucide="list" class="h-4.5 w-4.5"></i>
+              <span>Todos los Servicios</span>
+            </button>
+            
+            <button onclick="switchTab('config')" id="tab-config" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-brand-taupe hover:bg-gray-50 transition-colors flex items-center space-x-3">
+              <i data-lucide="settings" class="h-4.5 w-4.5"></i>
+              <span>Configuración General</span>
+            </button>
+          </div>
+
+          <div class="bg-brand-cream/50 border border-brand-rose/25 rounded-2xl p-4 space-y-3">
+            <h4 class="font-serif text-sm font-bold text-brand-dark flex items-center space-x-2">
+              <i data-lucide="save" class="h-4 w-4 text-brand-lila"></i>
+              <span>Guardar en Servidor</span>
+            </h4>
+            <p class="text-[11px] text-brand-taupe leading-relaxed">
+              Todos los cambios que realices localmente deben guardarse en el servidor para impactar la web.
+            </p>
+            <button id="btn-save-server" onclick="saveToDisk()" class="w-full bg-brand-lila hover:bg-brand-lilaDark text-white py-2 rounded-xl text-xs font-bold transition-all duration-300 flex items-center justify-center space-x-2 shadow-sm">
+              <i data-lucide="hard-drive" class="h-3.5 w-3.5"></i>
+              <span>Guardar en servicios.json</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Working Area Grid -->
+        <div class="lg:col-span-9 space-y-6">
+          
+          <!-- Alert notifications / success / error toast banner -->
+          <div id="toast-banner" class="hidden p-4 rounded-xl border flex items-center space-x-3 transition-opacity duration-300">
+            <i id="toast-icon" data-lucide="check-circle" class="h-5 w-5 flex-shrink-0"></i>
+            <span id="toast-message" class="text-sm font-semibold"></span>
+          </div>
+
+          <!-- TAB CONTENT: SERVICIOS DESTACADOS -->
+          <div id="content-destacados" class="space-y-4">
+            <div class="flex items-center justify-between border-b border-gray-200 pb-3">
+              <h2 class="font-serif text-xl sm:text-2xl font-bold text-brand-dark">Servicios Destacados</h2>
+              <button onclick="openFormModal('destacados', null)" class="bg-brand-sage hover:bg-[#7A967E] text-white text-xs px-3.5 py-2 rounded-full font-bold flex items-center space-x-1.5 shadow-sm transition-colors">
+                <i data-lucide="plus" class="h-4 w-4"></i>
+                <span>Nuevo Destacado</span>
+              </button>
+            </div>
+            
+            <div id="list-destacados" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+
+          <!-- TAB CONTENT: PAQUETES / COMBOS -->
+          <div id="content-paquetes" class="space-y-4 hidden">
+            <div class="flex items-center justify-between border-b border-gray-200 pb-3">
+              <h2 class="font-serif text-xl sm:text-2xl font-bold text-brand-dark">Paquetes / Combos</h2>
+              <button onclick="openFormModal('paquetes', null)" class="bg-brand-sage hover:bg-[#7A967E] text-white text-xs px-3.5 py-2 rounded-full font-bold flex items-center space-x-1.5 shadow-sm transition-colors">
+                <i data-lucide="plus" class="h-4 w-4"></i>
+                <span>Nuevo Paquete</span>
+              </button>
+            </div>
+            
+            <div id="list-paquetes" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+
+          <!-- TAB CONTENT: TODOS LOS SERVICIOS -->
+          <div id="content-todos" class="space-y-6 hidden">
+            <div class="flex items-center justify-between border-b border-gray-200 pb-3">
+              <h2 class="font-serif text-xl sm:text-2xl font-bold text-brand-dark">Todos los Servicios</h2>
+              <button onclick="openFormModal('todos', null)" class="bg-brand-sage hover:bg-[#7A967E] text-white text-xs px-3.5 py-2 rounded-full font-bold flex items-center space-x-1.5 shadow-sm transition-colors">
+                <i data-lucide="plus" class="h-4 w-4"></i>
+                <span>Agregar Servicio</span>
+              </button>
+            </div>
+            
+            <div id="list-todos" class="space-y-6">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+
+          <!-- TAB CONTENT: CONFIGURACION GENERAL -->
+          <div id="content-config" class="space-y-4 hidden">
+            <div class="border-b border-gray-200 pb-3">
+              <h2 class="font-serif text-xl sm:text-2xl font-bold text-brand-dark">Configuración General</h2>
+            </div>
+            
+            <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm space-y-6">
+              <!-- WhatsApp Configuration -->
+              <div class="space-y-1">
+                <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Teléfono de WhatsApp (Formato Internacional)</label>
+                <input type="text" id="config-phone" placeholder="Ej: 34697266101" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-sage text-sm font-semibold">
+                <p class="text-[10px] text-brand-taupe">Sin el prefijo de salida (+), ej: "34697266101" para España o "54911..." para Argentina.</p>
+              </div>
+
+              <!-- Ebook Configuration -->
+              <div class="border-t border-gray-100 pt-6 space-y-4">
+                <h3 class="font-serif text-base font-bold text-brand-dark flex items-center space-x-2">
+                  <i data-lucide="book-open" class="h-4.5 w-4.5 text-brand-lila"></i>
+                  <span>Configuración del Ebook</span>
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Etiqueta / Estado (Ej: Lanzamiento Próximo o Ya Disponible)</label>
+                    <input type="text" id="config-ebook-tag" placeholder="Ej: Lanzamiento Próximo" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-sage text-sm font-semibold">
+                  </div>
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Título del Libro</label>
+                    <input type="text" id="config-ebook-title" placeholder="Ej: Ebook de Bienestar y Autoconocimiento" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-sage text-sm font-semibold">
+                  </div>
+                </div>
+                
+                <div class="space-y-1">
+                  <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Descripción / Sinopsis del Ebook</label>
+                  <textarea id="config-ebook-desc" rows="3" placeholder="Ingresa la descripción del libro" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-sage text-sm"></textarea>
+                </div>
+              </div>
+
+              <!-- Admin Credentials Configuration -->
+              <div class="border-t border-gray-100 pt-6 space-y-4">
+                <h3 class="font-serif text-base font-bold text-brand-dark flex items-center space-x-2">
+                  <i data-lucide="lock" class="h-4.5 w-4.5 text-brand-lila"></i>
+                  <span>Credenciales de Acceso Administrador</span>
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Usuario Administrador</label>
+                    <input type="text" id="config-username" placeholder="Ej: laura" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-lila text-sm font-semibold">
+                  </div>
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Nueva Contraseña</label>
+                    <input type="password" id="config-password" placeholder="Ingresa nueva contraseña" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-lila text-sm">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="pt-4 border-t border-gray-100 flex justify-end">
+                <button onclick="saveGeneralConfig()" class="bg-brand-sage hover:bg-[#7A967E] text-white text-xs px-6 py-2.5 rounded-full font-bold shadow-sm transition-colors">
+                  Guardar Configuración
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- DYNAMIC FORM MODAL -->
+  <div id="form-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white border border-brand-rose/25 rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      
+      <!-- Modal Header -->
+      <div class="bg-brand-cream border-b border-brand-rose/20 px-6 py-4 flex items-center justify-between">
+        <h3 id="modal-title" class="font-serif text-lg font-bold text-brand-dark">Añadir Servicio</h3>
+        <button onclick="closeFormModal()" class="text-brand-taupe hover:text-brand-dark focus:outline-none">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable Form) -->
+      <div class="p-6 overflow-y-auto space-y-4 flex-1">
+        <form id="service-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+          <!-- Hidden inputs -->
+          <input type="hidden" id="form-section">
+          <input type="hidden" id="form-item-id">
+          
+          <!-- Group 1: General fields -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="space-y-1">
+              <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Nombre</label>
+              <input type="text" id="form-nombre" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-sage" required>
+            </div>
+            
+            <!-- Category Selector (only visible for 'todos') -->
+            <div class="space-y-1" id="form-category-wrapper">
+              <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Categoría</label>
+              <select id="form-categoria" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand-sage">
+                <option value="Psicología">Psicología</option>
+                <option value="Biodescodificación">Biodescodificación</option>
+                <option value="Psicoastrología">Psicoastrología</option>
+                <option value="Tarot">Tarot</option>
+                <option value="Registros Akáshicos">Registros Akáshicos</option>
+                <option value="Numerología">Numerología</option>
+                <option value="Limpieza Energética">Limpieza Energética</option>
+              </select>
+            </div>
+
+            <!-- Icon and Duration (only visible for 'destacados' and 'paquetes') -->
+            <div class="space-y-1" id="form-icon-wrapper">
+              <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Icono (Nombre Lucide)</label>
+              <select id="form-icon" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand-sage">
+                <option value="sun">Sol (Carta Natal)</option>
+                <option value="moon">Luna (Revolución Solar)</option>
+                <option value="heart-handshake">Manos corazón (Sinastría)</option>
+                <option value="sparkles">Destellos (Tarot / General)</option>
+                <option value="brain">Cerebro (Psicología)</option>
+                <option value="gift">Regalo (Paquetes)</option>
+                <option value="calendar-days">Calendario (Año Personal)</option>
+                <option value="heart-pulse">Vínculos (Pack Vínculos)</option>
+                <option value="flower">Flor (Bienestar)</option>
+              </select>
+            </div>
+
+            <div class="space-y-1" id="form-duration-wrapper">
+              <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Duración / Detalles</label>
+              <input type="text" id="form-duracion" placeholder="Ej: 50 min, 4 sesiones" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-sage">
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="space-y-1" id="form-description-wrapper">
+            <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Descripción / Subtítulo</label>
+            <textarea id="form-descripcion" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-sage"></textarea>
+          </div>
+
+          <!-- Group 2: Pricing (ARS, EUR and USD) -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-brand-cream/30 p-4 rounded-2xl border border-brand-rose/15">
+            <div class="space-y-1">
+              <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Precio ARS ($ Pesos)</label>
+              <input type="number" id="form-precio-ars" min="0" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-sage" required>
+            </div>
+            <div class="space-y-1">
+              <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Precio EUR (€ Euros)</label>
+              <input type="number" id="form-precio-eur" min="0" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-sage" required>
+            </div>
+            <div class="space-y-1">
+              <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Precio USD ($ Dólares)</label>
+              <input type="number" id="form-precio-usd" min="0" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-sage" required>
+            </div>
+          </div>
+
+          <!-- Bullets / List items (only visible for 'destacados' and 'paquetes') -->
+          <div class="space-y-1" id="form-bullets-wrapper">
+            <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Lista de Ítems (Uno por línea)</label>
+            <textarea id="form-bullets" rows="4" placeholder="Ej:&#10;Informe PDF personalizado&#10;Sesión individual&#10;Enfoque psicológico" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-sage"></textarea>
+          </div>
+
+          <!-- Modal Footer Buttons -->
+          <div class="pt-4 border-t border-gray-100 flex justify-end space-x-3">
+            <button type="button" onclick="closeFormModal()" class="px-5 py-2.5 border border-gray-300 rounded-full text-xs font-bold hover:bg-gray-50 transition-colors">
+              Cancelar
+            </button>
+            <button type="submit" class="bg-brand-sage hover:bg-[#7A967E] text-white px-6 py-2.5 rounded-full text-xs font-bold shadow-sm transition-colors">
+              Confirmar
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ADMIN CLIENT LOGIC -->
+  <script>
+    let servicesData = null;
+    let currentTab = 'destacados';
+
+    // Verify Password on Gate Submission
+    async function verifyPassword(event) {
+      if (event) event.preventDefault();
+      const userInput = document.getElementById('gate-username').value.trim();
+      const pwInput = document.getElementById('gate-password').value;
+      const gateError = document.getElementById('gate-error');
+      
+      try {
+        const response = await fetch('api.php?action=login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: userInput, password: pwInput })
+        });
+        
+        if (response.ok) {
+          sessionStorage.setItem('isAdmin', 'true');
+          sessionStorage.setItem('adminUser', userInput);
+          sessionStorage.setItem('adminPass', pwInput);
+          document.getElementById('password-gate').classList.add('hidden');
+          document.getElementById('admin-panel').classList.remove('hidden');
+          loadData();
+        } else {
+          const errJson = await response.json();
+          gateError.textContent = errJson.error || 'Usuario o contraseña incorrectos.';
+          gateError.classList.remove('hidden');
+        }
+      } catch (e) {
+        gateError.textContent = 'Error de red al conectar con el servidor.';
+        gateError.classList.remove('hidden');
+      }
+    }
+
+    // Auto-check auth on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      if (sessionStorage.getItem('isAdmin') === 'true') {
+        document.getElementById('password-gate').classList.add('hidden');
+        document.getElementById('admin-panel').classList.remove('hidden');
+        loadData();
+      }
+      lucide.createIcons();
+    });
+
+    function logout() {
+      sessionStorage.removeItem('isAdmin');
+      sessionStorage.removeItem('adminUser');
+      sessionStorage.removeItem('adminPass');
+      window.location.reload();
+    }
+
+    // Fetch dynamic JSON data
+    async function loadData() {
+      try {
+        const response = await fetch('api.php?action=services');
+        if (response.ok) {
+          servicesData = await response.json();
+          renderTabContent();
+          populateConfigForm();
+        } else {
+          showToast('Error al conectar con la API del servidor.', 'error');
+        }
+      } catch (err) {
+        showToast('Error de red al cargar servicios.json.', 'error');
+      }
+    }
+
+    // Tab switcher logic
+    function switchTab(tabName) {
+      const tabs = ['destacados', 'paquetes', 'todos', 'config'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        const cnt = document.getElementById(`content-${t}`);
+        
+        if (t === tabName) {
+          btn.className = "w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-colors flex items-center space-x-3 bg-brand-sage text-white shadow-sm";
+          cnt.classList.remove('hidden');
+        } else {
+          btn.className = "w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-brand-taupe hover:bg-gray-50 transition-colors flex items-center space-x-3";
+          cnt.classList.add('hidden');
+        }
+      });
+      currentTab = tabName;
+      renderTabContent(); // Render list dynamically when tabs are switched
+      lucide.createIcons();
+    }
+
+    // Show Toast Success/Error
+    function showToast(message, type = 'success') {
+      const banner = document.getElementById('toast-banner');
+      const icon = document.getElementById('toast-icon');
+      const msg = document.getElementById('toast-message');
+
+      banner.classList.remove('hidden', 'bg-green-50', 'border-green-200', 'text-green-800', 'bg-red-50', 'border-red-200', 'text-red-800');
+      
+      if (type === 'success') {
+        banner.classList.add('bg-green-50', 'border-green-200', 'text-green-800');
+        icon.setAttribute('data-lucide', 'check-circle');
+      } else {
+        banner.classList.add('bg-red-50', 'border-red-200', 'text-red-800');
+        icon.setAttribute('data-lucide', 'alert-circle');
+      }
+      
+      msg.textContent = message;
+      lucide.createIcons();
+
+      // Show
+      banner.style.opacity = '100';
+      
+      // Auto-hide after 4 seconds
+      setTimeout(() => {
+        banner.classList.add('hidden');
+      }, 4000);
+    }
+
+    // Populate the config fields
+    function populateConfigForm() {
+      if (!servicesData) return;
+      document.getElementById('config-phone').value = servicesData.whatsapp_phone || "34697266101";
+      document.getElementById('config-username').value = sessionStorage.getItem('adminUser') || "laura";
+      document.getElementById('config-password').value = sessionStorage.getItem('adminPass') || "";
+      
+      if (servicesData.ebook_config) {
+        document.getElementById('config-ebook-tag').value = servicesData.ebook_config.etiqueta || 'Lanzamiento Próximo';
+        document.getElementById('config-ebook-title').value = servicesData.ebook_config.titulo || 'Ebook de Bienestar y Autoconocimiento';
+        document.getElementById('config-ebook-desc').value = servicesData.ebook_config.descripcion || '';
+      }
+    }
+
+    // Save General Config (WhatsApp phone & Credentials)
+    async function saveGeneralConfig() {
+      const phoneInput = document.getElementById('config-phone').value.trim();
+      const usernameInput = document.getElementById('config-username').value.trim();
+      const passwordInput = document.getElementById('config-password').value;
+
+      if (!phoneInput) {
+        showToast('El teléfono no puede estar vacío.', 'error');
+        return;
+      }
+      if (!usernameInput) {
+        showToast('El usuario administrador no puede estar vacío.', 'error');
+        return;
+      }
+
+      // Save phone in state
+      servicesData.whatsapp_phone = phoneInput;
+      
+      // Save ebook config in state
+      if (!servicesData.ebook_config) {
+        servicesData.ebook_config = {};
+      }
+      servicesData.ebook_config.etiqueta = document.getElementById('config-ebook-tag').value.trim();
+      servicesData.ebook_config.titulo = document.getElementById('config-ebook-title').value.trim();
+      servicesData.ebook_config.descripcion = document.getElementById('config-ebook-desc').value.trim();
+
+      // POST to change credentials
+      try {
+        const response = await fetch('api.php?action=change-credentials', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: usernameInput, password: passwordInput })
+        });
+        
+        if (response.ok) {
+          sessionStorage.setItem('adminUser', usernameInput);
+          if (passwordInput) sessionStorage.setItem('adminPass', passwordInput);
+          // Auto-save the servicesData (which includes phone and ebook_config) to the server json
+          await saveToDisk();
+          showToast('Configuración general y Ebook actualizados con éxito en el servidor.');
+        } else {
+          const errJson = await response.json();
+          showToast(errJson.error || 'Error al guardar credenciales.', 'error');
+        }
+      } catch (err) {
+        showToast('Error de red al intentar actualizar credenciales.', 'error');
+      }
+    }
+
+    // RENDER ITEMS IN SELECTED TAB
+    function renderTabContent() {
+      if (!servicesData) return;
+      
+      if (currentTab === 'destacados') {
+        renderDestacadosList();
+      } else if (currentTab === 'paquetes') {
+        renderPaquetesList();
+      } else if (currentTab === 'todos') {
+        renderTodosList();
+      }
+      lucide.createIcons();
+    }
+
+    // Render Featured List
+    function renderDestacadosList() {
+      const container = document.getElementById('list-destacados');
+      container.innerHTML = '';
+      
+      const items = servicesData.servicios_destacados || [];
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "bg-white border border-gray-200 rounded-2xl p-5 shadow-sm space-y-4 flex flex-col justify-between";
+        
+        card.innerHTML = `
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-brand-taupe flex items-center space-x-1.5">
+                <i data-lucide="${item.icon || 'sun'}" class="h-4 w-4 text-brand-terracota"></i>
+                <span>${item.duracion || '60 min'}</span>
+              </span>
+              <span class="text-xs font-bold text-brand-terracota bg-brand-cream px-2.5 py-1 rounded-full text-center">
+                ${item.precio_eur}€ / $${item.precio_ars.toLocaleString()} ARS / u$s${item.precio_usd || 0} USD
+              </span>
+            </div>
+            <h3 class="font-serif font-bold text-lg text-brand-dark">${item.nombre}</h3>
+            <p class="text-xs text-brand-taupe line-clamp-2">${item.descripcion || ''}</p>
+            <div class="text-[10px] text-brand-taupe font-semibold">Ítems: ${item.bullets.length} definidos</div>
+          </div>
+          
+          <div class="flex items-center space-x-2 pt-2 border-t border-gray-100">
+            <button onclick="openFormModal('destacados', '${item.id}')" class="flex-1 py-2 text-center bg-brand-sage hover:bg-[#7A967E] text-white rounded-xl text-xs font-semibold flex items-center justify-center space-x-1">
+              <i data-lucide="edit-2" class="h-3.5 w-3.5"></i>
+              <span>Editar</span>
+            </button>
+            <button onclick="deleteItem('destacados', '${item.id}')" class="py-2 px-3 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-xs font-semibold" title="Eliminar">
+              <i data-lucide="trash-2" class="h-4 w-4"></i>
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Render Packages List
+    function renderPaquetesList() {
+      const container = document.getElementById('list-paquetes');
+      container.innerHTML = '';
+      
+      const items = servicesData.paquetes || [];
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "bg-white border border-gray-200 rounded-2xl p-5 shadow-sm space-y-4 flex flex-col justify-between";
+        
+        card.innerHTML = `
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-brand-taupe flex items-center space-x-1.5">
+                <i data-lucide="${item.icon || 'gift'}" class="h-4 w-4 text-brand-lila"></i>
+                <span>Combo</span>
+              </span>
+              <span class="text-xs font-bold text-brand-terracota bg-brand-cream px-2.5 py-1 rounded-full text-center">
+                ${item.precio_eur}€ / $${item.precio_ars.toLocaleString()} ARS / u$s${item.precio_usd || 0} USD
+              </span>
+            </div>
+            <h3 class="font-serif font-bold text-lg text-brand-dark">${item.nombre}</h3>
+            <div class="text-[10px] text-brand-taupe font-semibold">Ítems en paquete: ${item.bullets.length}</div>
+          </div>
+          
+          <div class="flex items-center space-x-2 pt-2 border-t border-gray-100">
+            <button onclick="openFormModal('paquetes', '${item.id}')" class="flex-1 py-2 text-center bg-brand-sage hover:bg-[#7A967E] text-white rounded-xl text-xs font-semibold flex items-center justify-center space-x-1">
+              <i data-lucide="edit-2" class="h-3.5 w-3.5"></i>
+              <span>Editar</span>
+            </button>
+            <button onclick="deleteItem('paquetes', '${item.id}')" class="py-2 px-3 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-xs font-semibold" title="Eliminar">
+              <i data-lucide="trash-2" class="h-4 w-4"></i>
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Render Full List by categories
+    function renderTodosList() {
+      const container = document.getElementById('list-todos');
+      container.innerHTML = '';
+      
+      const categories = servicesData.todos_los_servicios || [];
+      categories.forEach((cat, catIdx) => {
+        const catCard = document.createElement('div');
+        catCard.className = "bg-white border border-gray-200 rounded-2xl p-5 shadow-sm space-y-4";
+        
+        let itemsHtml = cat.items.map(item => `
+          <div class="flex items-center justify-between py-2.5 border-b border-gray-100 last:border-0 hover:bg-gray-50/50 px-2 rounded-lg transition-colors">
+            <div class="flex flex-col">
+              <span class="text-sm font-semibold text-brand-dark">${item.nombre}</span>
+              <span class="text-[11px] text-brand-taupe">${item.precio_eur}€ / $${item.precio_ars.toLocaleString()} ARS / u$s${item.precio_usd || 0} USD</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button onclick="openFormModal('todos', '${item.id}', '${cat.categoria}')" class="p-2 bg-gray-50 hover:bg-brand-sage/10 text-brand-sage rounded-lg transition-colors" title="Editar">
+                <i data-lucide="edit-2" class="h-3.5 w-3.5"></i>
+              </button>
+              <button onclick="deleteItem('todos', '${item.id}', '${cat.categoria}')" class="p-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition-colors" title="Eliminar">
+                <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+        if (cat.items.length === 0) {
+          itemsHtml = `<p class="text-xs text-brand-taupe italic p-3 text-center">No hay servicios registrados en esta categoría.</p>`;
+        }
+
+        catCard.innerHTML = `
+          <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+            <h3 class="font-serif font-bold text-base text-brand-dark flex items-center space-x-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-terracota"></span>
+              <span>${cat.categoria}</span>
+            </h3>
+            <span class="text-[10px] bg-gray-100 text-brand-taupe px-2 py-0.5 rounded-full font-semibold">${cat.items.length} servicios</span>
+          </div>
+          <div class="divide-y divide-gray-100">
+            ${itemsHtml}
+          </div>
+        `;
+        container.appendChild(catCard);
+      });
+    }
+
+    // OPEN FORM MODAL
+    function openFormModal(section, itemId = null, categoryName = null) {
+      const modal = document.getElementById('form-modal');
+      const form = document.getElementById('service-form');
+      form.reset();
+
+      document.getElementById('form-section').value = section;
+      document.getElementById('form-item-id').value = itemId || '';
+
+      const modalTitle = document.getElementById('modal-title');
+      
+      // Control field visibilities based on section
+      const catWrapper = document.getElementById('form-category-wrapper');
+      const iconWrapper = document.getElementById('form-icon-wrapper');
+      const durationWrapper = document.getElementById('form-duration-wrapper');
+      const descWrapper = document.getElementById('form-description-wrapper');
+      const bulletsWrapper = document.getElementById('form-bullets-wrapper');
+
+      catWrapper.classList.add('hidden');
+      iconWrapper.classList.add('hidden');
+      durationWrapper.classList.add('hidden');
+      descWrapper.classList.add('hidden');
+      bulletsWrapper.classList.add('hidden');
+
+      if (section === 'destacados') {
+        modalTitle.textContent = itemId ? "Editar Servicio Destacado" : "Nuevo Servicio Destacado";
+        iconWrapper.classList.remove('hidden');
+        durationWrapper.classList.remove('hidden');
+        descWrapper.classList.remove('hidden');
+        bulletsWrapper.classList.remove('hidden');
+        
+        // Populate if editing
+        if (itemId) {
+          const item = servicesData.servicios_destacados.find(i => i.id === itemId);
+          if (item) {
+            document.getElementById('form-nombre').value = item.nombre;
+            document.getElementById('form-icon').value = item.icon || 'sun';
+            document.getElementById('form-duracion').value = item.duracion || '';
+            document.getElementById('form-descripcion').value = item.descripcion || '';
+            document.getElementById('form-precio-ars').value = item.precio_ars;
+            document.getElementById('form-precio-eur').value = item.precio_eur;
+            document.getElementById('form-precio-usd').value = item.precio_usd || '';
+            document.getElementById('form-bullets').value = item.bullets.join('\n');
+          }
+        }
+      } 
+      else if (section === 'paquetes') {
+        modalTitle.textContent = itemId ? "Editar Paquete / Combo" : "Nuevo Paquete / Combo";
+        iconWrapper.classList.remove('hidden');
+        bulletsWrapper.classList.remove('hidden');
+
+        if (itemId) {
+          const item = servicesData.paquetes.find(i => i.id === itemId);
+          if (item) {
+            document.getElementById('form-nombre').value = item.nombre;
+            document.getElementById('form-icon').value = item.icon || 'gift';
+            document.getElementById('form-precio-ars').value = item.precio_ars;
+            document.getElementById('form-precio-eur').value = item.precio_eur;
+            document.getElementById('form-precio-usd').value = item.precio_usd || '';
+            document.getElementById('form-bullets').value = item.bullets.join('\n');
+          }
+        }
+      } 
+      else if (section === 'todos') {
+        modalTitle.textContent = itemId ? "Editar Servicio Individual" : "Añadir Servicio Individual";
+        catWrapper.classList.remove('hidden');
+        
+        if (categoryName) {
+          document.getElementById('form-categoria').value = categoryName;
+        }
+
+        if (itemId) {
+          // Find in categories
+          let foundItem = null;
+          categories = servicesData.todos_los_servicios || [];
+          categories.forEach(cat => {
+            const item = cat.items.find(i => i.id === itemId);
+            if (item) foundItem = item;
+          });
+          
+          if (foundItem) {
+            document.getElementById('form-nombre').value = foundItem.nombre;
+            document.getElementById('form-precio-ars').value = foundItem.precio_ars;
+            document.getElementById('form-precio-eur').value = foundItem.precio_eur;
+            document.getElementById('form-precio-usd').value = foundItem.precio_usd || '';
+          }
+        }
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      lucide.createIcons();
+    }
+
+    function closeFormModal() {
+      const modal = document.getElementById('form-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // FORM SUBMISSION (Create / Update in state)
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      
+      const section = document.getElementById('form-section').value;
+      const itemId = document.getElementById('form-item-id').value;
+      
+      const nombre = document.getElementById('form-nombre').value.trim();
+      const precioArs = parseInt(document.getElementById('form-precio-ars').value);
+      const precioEur = parseInt(document.getElementById('form-precio-eur').value);
+      const precioUsd = parseInt(document.getElementById('form-precio-usd').value) || 0;
+      const icon = document.getElementById('form-icon').value;
+      const duracion = document.getElementById('form-duracion').value.trim();
+      const descripcion = document.getElementById('form-descripcion').value.trim();
+      const bulletsText = document.getElementById('form-bullets').value;
+      
+      // Parse bullets to array (filter empty lines)
+      const bullets = bulletsText.split('\n').map(b => b.trim()).filter(b => b.length > 0);
+
+      if (section === 'destacados') {
+        if (itemId) {
+          // Edit
+          const idx = servicesData.servicios_destacados.findIndex(i => i.id === itemId);
+          if (idx !== -1) {
+            servicesData.servicios_destacados[idx] = {
+              id: itemId, nombre, precio_ars: precioArs, precio_eur: precioEur, precio_usd: precioUsd, icon, duracion, descripcion, bullets
+            };
+          }
+        } else {
+          // Create
+          const newId = `dest-${Date.now()}`;
+          servicesData.servicios_destacados.push({
+            id: newId, nombre, precio_ars: precioArs, precio_eur: precioEur, precio_usd: precioUsd, icon, duracion, descripcion, bullets
+          });
+        }
+      } 
+      else if (section === 'paquetes') {
+        if (itemId) {
+          const idx = servicesData.paquetes.findIndex(i => i.id === itemId);
+          if (idx !== -1) {
+            servicesData.paquetes[idx] = {
+              id: itemId, nombre, precio_ars: precioArs, precio_eur: precioEur, precio_usd: precioUsd, icon, bullets, button_text: servicesData.paquetes[idx].button_text || 'Reservar'
+            };
+          }
+        } else {
+          const newId = `pack-${Date.now()}`;
+          servicesData.paquetes.push({
+            id: newId, nombre, precio_ars: precioArs, precio_eur: precioEur, precio_usd: precioUsd, icon, bullets, button_text: 'Reservar'
+          });
+        }
+      } 
+      else if (section === 'todos') {
+        const catName = document.getElementById('form-categoria').value;
+        
+        // Find category array
+        let catObj = servicesData.todos_los_servicios.find(c => c.categoria === catName);
+        if (!catObj) {
+          catObj = { categoria: catName, items: [] };
+          servicesData.todos_los_servicios.push(catObj);
+        }
+
+        if (itemId) {
+          // Edit: first remove from previous category (if changed) and add to selected category
+          // First, delete from everywhere
+          servicesData.todos_los_servicios.forEach(cat => {
+            const idx = cat.items.findIndex(i => i.id === itemId);
+            if (idx !== -1) cat.items.splice(idx, 1);
+          });
+          // Add to current category
+          catObj.items.push({ id: itemId, nombre, precio_ars: precioArs, precio_eur: precioEur, precio_usd: precioUsd });
+        } else {
+          // Create
+          const newId = `all-${Date.now()}`;
+          catObj.items.push({ id: newId, nombre, precio_ars: precioArs, precio_eur: precioEur, precio_usd: precioUsd });
+        }
+      }
+
+      closeFormModal();
+      renderTabContent();
+      showToast('Cambios registrados localmente. Presiona "Guardar en servicios.json" para impactar en el servidor.');
+    }
+
+    // DELETE ITEM FROM STATE
+    function deleteItem(section, itemId, extraParam = null) {
+      if (!confirm('¿Estás seguro/a de que deseas eliminar este servicio?')) return;
+
+      if (section === 'destacados') {
+        const idx = servicesData.servicios_destacados.findIndex(i => i.id === itemId);
+        if (idx !== -1) servicesData.servicios_destacados.splice(idx, 1);
+      } 
+      else if (section === 'paquetes') {
+        const idx = servicesData.paquetes.findIndex(i => i.id === itemId);
+        if (idx !== -1) servicesData.paquetes.splice(idx, 1);
+      } 
+      else if (section === 'todos') {
+        // Delete item from matching category
+        servicesData.todos_los_servicios.forEach(cat => {
+          const idx = cat.items.findIndex(i => i.id === itemId);
+          if (idx !== -1) cat.items.splice(idx, 1);
+        });
+      }
+
+      renderTabContent();
+      showToast('Servicio eliminado localmente. Presiona "Guardar en servicios.json" para impactar en el servidor.');
+    }
+
+    // SAVE STATE TO DISK (POST request to server.js)
+    async function saveToDisk() {
+      if (!servicesData) return;
+      
+      const btn = document.getElementById('btn-save-server');
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader" class="h-3.5 w-3.5 animate-spin"></i> <span>Guardando...</span>`;
+      lucide.createIcons();
+
+      try {
+        const response = await fetch('api.php?action=save', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(servicesData)
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          showToast(result.message || 'El archivo servicios.json se ha actualizado correctamente.');
+        } else {
+          const errData = await response.json();
+          showToast(errData.error || 'Error al intentar guardar los datos.', 'error');
+        }
+      } catch (err) {
+        showToast('Error de red al intentar conectar con el servidor.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+        lucide.createIcons();
+      }
+    }
+  </script>
+
+
+
+
+  <!-- File protocol pretty URL routing fallback -->
+  <script>
+    if (window.location.protocol === 'file:') {
+      document.querySelectorAll('a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:') && !href.includes('#') && !href.startsWith('javascript:')) {
+          if (!href.endsWith('.html') && href !== './' && href !== '/') {
+            link.setAttribute('href', href + '.html');
+          }
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
