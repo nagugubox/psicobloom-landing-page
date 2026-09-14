@@ -230,6 +230,17 @@
                   <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Descripción / Sinopsis del Ebook</label>
                   <textarea id="config-ebook-desc" rows="3" placeholder="Ingresa la descripción del libro" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-sage text-sm"></textarea>
                 </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Texto del Botón (Ej: Reservar ahora / Comprar)</label>
+                    <input type="text" id="config-ebook-btn-text" placeholder="Ej: Reservar ahora" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-sage text-sm font-semibold">
+                  </div>
+                  <div class="space-y-1">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-taupe">Enlace de Compra / Pago (Hotmart, etc.)</label>
+                    <input type="url" id="config-ebook-btn-url" placeholder="Ej: https://pay.hotmart.com/..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-sage text-sm font-semibold">
+                  </div>
+                </div>
               </div>
 
               <!-- Admin Credentials Configuration -->
@@ -496,9 +507,11 @@
       document.getElementById('config-password').value = sessionStorage.getItem('adminPass') || "";
       
       if (servicesData.ebook_config) {
-        document.getElementById('config-ebook-tag').value = servicesData.ebook_config.etiqueta || 'Lanzamiento Próximo';
-        document.getElementById('config-ebook-title').value = servicesData.ebook_config.titulo || 'Ebook de Bienestar y Autoconocimiento';
+        document.getElementById('config-ebook-tag').value = servicesData.ebook_config.etiqueta || 'Disponible ahora';
+        document.getElementById('config-ebook-title').value = servicesData.ebook_config.titulo || 'Los ciclos de la vida';
         document.getElementById('config-ebook-desc').value = servicesData.ebook_config.descripcion || '';
+        document.getElementById('config-ebook-btn-text').value = servicesData.ebook_config.boton_texto || 'Reservar ahora';
+        document.getElementById('config-ebook-btn-url').value = servicesData.ebook_config.enlace_compra || 'https://pay.hotmart.com/S107504502L?bid=1789408811571';
       }
     }
 
@@ -527,6 +540,8 @@
       servicesData.ebook_config.etiqueta = document.getElementById('config-ebook-tag').value.trim();
       servicesData.ebook_config.titulo = document.getElementById('config-ebook-title').value.trim();
       servicesData.ebook_config.descripcion = document.getElementById('config-ebook-desc').value.trim();
+      servicesData.ebook_config.boton_texto = document.getElementById('config-ebook-btn-text').value.trim() || 'Reservar ahora';
+      servicesData.ebook_config.enlace_compra = document.getElementById('config-ebook-btn-url').value.trim() || 'https://pay.hotmart.com/S107504502L?bid=1789408811571';
 
       // POST to change credentials
       try {

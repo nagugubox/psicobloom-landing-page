@@ -787,9 +787,9 @@
             </p>
             
             <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start">
-              <a id="btn-request-ebook" href="#" target="_blank" class="w-full sm:w-auto bg-brand-lila hover:bg-brand-lilaDark text-white px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-semibold flex items-center justify-center space-x-3 transform hover:-translate-y-0.5">
+              <a id="btn-request-ebook" href="https://pay.hotmart.com/S107504502L?bid=1789408811571" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-brand-lila hover:bg-brand-lilaDark text-white px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-semibold flex items-center justify-center space-x-3 transform hover:-translate-y-0.5">
                 <i data-lucide="book-open" class="h-5 w-5"></i>
-                <span>Reservar mi acceso</span>
+                <span id="btn-request-ebook-text">Reservar ahora</span>
               </a>
             </div>
           </div>
@@ -1395,9 +1395,11 @@
       ],
       "whatsapp_phone": "34697266101",
       "ebook_config": {
-            "etiqueta": "Próximamente",
+            "etiqueta": "Disponible ahora",
             "titulo": "Los ciclos de la vida",
-            "descripcion": "Psicoastrología para comprender tus etapas de transformación.\n\nCada etapa de la vida tiene un propósito. Comprender los ciclos que atraviesas puede ayudarte a dar sentido a tus experiencias, reconocer tus aprendizajes y transitar los cambios con mayor consciencia.\n\nEn este ebook descubrirás cómo la psicoastrología integra la astrología y la psicología para comprender los momentos de crisis, crecimiento y transformación personal desde una mirada profunda y práctica.\n\nPróximamente disponible. Regístrate para acceder a la preventa y recibir todas las novedades."
+            "descripcion": "Psicoastrología para comprender tus etapas de transformación.\n\nCada etapa de la vida tiene un propósito. Comprender los ciclos que atraviesas puede ayudarte a dar sentido a tus experiencias, reconocer tus aprendizajes y transitar los cambios con mayor consciencia.\n\nEn este ebook descubrirás cómo la psicoastrología integra la astrología y la psicología para comprender los momentos de crisis, crecimiento y transformación personal desde una mirada profunda y práctica.",
+            "boton_texto": "Reservar ahora",
+            "enlace_compra": "https://pay.hotmart.com/S107504502L?bid=1789408811571"
       }
 };
 
@@ -1919,10 +1921,10 @@
       const config = servicesData.ebook_config;
       
       const badgeEl = document.getElementById('ebook-badge');
-      if (badgeEl) badgeEl.textContent = config.etiqueta || 'Lanzamiento Próximo';
+      if (badgeEl) badgeEl.textContent = config.etiqueta || 'Disponible ahora';
 
       const titleEl = document.getElementById('ebook-title');
-      if (titleEl) titleEl.textContent = config.titulo || 'Ebook de Bienestar y Autoconocimiento';
+      if (titleEl) titleEl.textContent = config.titulo || 'Los ciclos de la vida';
 
       const descEl = document.getElementById('ebook-desc');
       if (descEl) {
@@ -1930,11 +1932,16 @@
       }
 
       const requestBtn = document.getElementById('btn-request-ebook');
+      const requestBtnText = document.getElementById('btn-request-ebook-text');
+      
       if (requestBtn) {
-        const phone = servicesData.whatsapp_phone || '34697266101';
-        const ebookTitle = config.titulo || 'Ebook de Bienestar y Autoconocimiento';
-        const text = `Hola Laura! Quisiera registrar mi interés para tu próximo Ebook: "${ebookTitle}". Por favor, avísame cuando esté disponible o en preventa.`;
-        requestBtn.href = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+        const link = config.enlace_compra || 'https://pay.hotmart.com/S107504502L?bid=1789408811571';
+        requestBtn.href = link;
+        requestBtn.target = '_blank';
+        requestBtn.rel = 'noopener noreferrer';
+      }
+      if (requestBtnText) {
+        requestBtnText.textContent = config.boton_texto || 'Reservar ahora';
       }
     }
   </script>
