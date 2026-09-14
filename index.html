@@ -7,7 +7,7 @@
       const path = window.location.pathname;
       if (path && path !== '/' && path !== '/index.html' && path !== '/index') {
         const cleanPath = path.replace(/\/$/, "");
-        const legalPages = ['/aviso-legal', '/politica-privacidad', '/politica-cookies', '/admin'];
+        const legalPages = ['/aviso-legal', '/politica-privacidad', '/politica-cookies', '/admin', '/mas-info'];
         if (legalPages.includes(cleanPath)) {
           window.location.replace(cleanPath + '.html' + window.location.search + window.location.hash);
         }
